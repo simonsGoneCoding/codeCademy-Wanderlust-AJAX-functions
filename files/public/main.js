@@ -53,7 +53,7 @@ const getForecast = async () => {
     const response = await fetch(urlToFetch);
     if (response.ok) {
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
+      // console.log(jsonResponse);
       return jsonResponse;
     }
   } catch (error) {
@@ -80,8 +80,7 @@ const renderVenues = (venues) => {
 
 const renderForecast = (day) => {
   // Add your code here:
-
-  let weatherContent = "";
+  const weatherContent = createWeatherHTML(day);
   $weatherDiv.append(weatherContent);
 };
 
@@ -90,8 +89,8 @@ const executeSearch = () => {
   $weatherDiv.empty();
   $destination.empty();
   $container.css("visibility", "visible");
-  getVenues();
-  getForecast();
+  getVenues().then((venues) => renderVenues(venues));
+  getForecast().then((weather) => renderForecast(weather));
   return false;
 };
 
